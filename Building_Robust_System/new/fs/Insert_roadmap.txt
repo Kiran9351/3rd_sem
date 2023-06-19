@@ -1,0 +1,36 @@
+
+- To insert new file
+	- File information
+		- File size
+		- File name
+		
+	- Info. into file metadata
+		- File size
+		- File name
+		- File first block(metablock) (need to find and calculate)
+		- Set flag that indicate that FMD block is taken.
+		
+	- Function for fmd
+		- call fmd_functions() (from main())
+		- check for blocks availability (from fmd_functions to bitmap.c->check_blocks())
+		- find first metablock for fmd (from fmd_functions to bitmap.c->find_first_metablock())
+		- find fmd for given file (from fmd_functions() to find_fimd())
+	
+		- then insert data file name,filesize, metablock no and flag into found fmd
+		- Return the fmd into main.
+		- use call by address variable to find the bytes till that file fmd.
+		
+		- Find blocks for acutal data and keep block nos. fmd block no.
+		- Using fmd block nos' data write actual data.
+		
+	
+- To insert the data of file
+	- seek till the first block of fmd
+	- Read the data of first block of fmd into some array.
+	- iterate on array
+	- Read block no.
+	- seek till the block number
+	- read the block size amount of data from buffer 
+	- write into the block 
+	- repeat the process untill all blocks are not written.
+	

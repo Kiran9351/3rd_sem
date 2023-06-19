@@ -1,0 +1,223 @@
+Fork system call :
+	
+	- The fork system call is used to create new processes.
+	
+	- The newly created process is called child process.
+	
+	- The process which calls fork and creates a new process is the parent process.
+	
+	- The child and parent executed concurrently.
+
+	- The child and parent process reside on different memory spaces.
+	
+	- These memory spaces have same content and whatever operations is performed by one process will not affect the other process.
+
+	- When the child process is created, now both the process will have the same program counter (PC).
+	
+	- So both of these process will point to the same next instruction.
+	
+	- The files opened by the parent process will be the same for the child process.
+	- The child process is exactly same as its parent process but there is difference in the process ID's:
+	
+		- The process ID of the child process is unique process ID which is differen from the ID's of all other existing processes.
+
+---------------------------------------------------------------------
+
+
+Properties of child processes:
+	
+	- The counters and the resource utilization are initialized to reset to zero.
+	
+	- When the parent process is terminated, child process do not receive any signal because PR_SET_PDEATHSIG attribute in prctl() is reset.
+
+	- The thread used to call fork() creates the child process. So the address of the child process will be the same as that of the parent.
+
+	- The file descriptor of parent process is inherited by the child process.
+		- For example, the offset of the file or status of flags and the I/O attributes will be shared among the file descriptors of child and parent processes. So file descriptor of parent class will refer to same file descriptor of child class.
+
+	- The open message queue decriptors of parent process are inherited by the child process.
+		- For example, if a file deccriptor contains a message in parent process the same message will be present in the corresponding file descriptor of child process. So we can say that the flag values of these file decriptors are same.
+
+	- Similarily open directory will be inherited by the child processes.
+
+	- The default timer slack value of the child class is same as the current timer slack value of parent class.
+
+-----------------------------------------------------------------------------
+
+Properties that are not inherited by child process:
+
+	- Memory locks 
+	- The pending signal of a child class is empty
+	- Process associated records locks (fcntl())
+	- Asynchronous I/O operations and I/O contents.
+	- Directory change notifications.
+	- Timers such as alarm(), setitimer(), are not inherited by the child process.
+
+-------------------------------------------------------------------------------
+
+fork in c:
+
+	- There are no arguments in fork() and the return type of fork () is integer.
+
+	- Header files for the fork()
+		- #include<stdio.h>
+		- #include<sys/types.h>
+		- #include<unistd.h>
+
+	- When working with fork(), <sys/types.h> can be used for type pid_t of processes ID's as pid_t is defined in <sys/types.h>
+
+	- The header file <unistd.h> is where fork() is defined so you have to include it to your program to ues fork().
+
+	- The return type is defined in <sys/types.h> and fork() call is defined in <unistd.h>. Therefor you need to include both header files.
+
+-------------------------------------------------------------------------------
+
+Syntax for fork() :
+
+	- pid_t fork(void);
+
+	- When the child process gets created successfully the PID of the child process is returned in the parent process and 0 will be returned to the child process itself.
+
+	- If there is any error then -1 is returned to the parent process and the childprocess is not created.
+
+	- No arguments are passed to fork().
+
+-------------------------------------------------------------------------------
+
+- Example 1 : Calling fork()
+
+	#include<stdio.h>
+	#include<sys/types.h>
+	#include<unistd.h>
+
+	int main()
+	{
+		fork();
+		printf("Using fork() system call\n");
+		return 0;
+	}
+
+output:
+	Using fork() system call
+	Using fork() system call
+
+-------------------------------------
+
+Exaplination:
+
+	- Here we have used fork(), this will create child process.
+
+	- When the child process is created, both the parent process and the child process will point to the next instruction (same program counter).
+
+	- In this way the remaining instructions or C statements will be executed the total number of times, i.e. is 2^n times, where n is number of fork system calls.
+
+	- So when the fork system call is used one time as above 2^1 = 2 we will have our output 2 times.
+
+	- Here when the fork() system call is used the internal structure will look like:
+
+			Parent
+			  |
+			  |fork()
+			  |
+			  v
+		-------------------------
+		|			|
+		v			v
+	     Parent		      Child
+	(same program statement)    (same program statement)
+
+--------------------------------------------------------------------------------
+
+Example 2 : fork() is used 4 times
+
+	#include<stdio.h>
+	#include<unistd.h>
+	#include<sys/types.h>
+
+	int main()
+	{
+		fork();
+		fork();
+		fork();
+		fork();
+		printf("Using fork() system call");
+
+		return 0;
+	}	
+
+Output:
+
+	Using fork() system call
+	Using fork() system call
+	Using fork() system call
+	Using fork() system call
+	Using fork() system call
+	Using fork() system call
+	Using fork() system call
+	Using fork() system call
+	Using fork() system call
+	Using fork() system call
+	Using fork() system call
+	Using fork() system call
+	Using fork() system call
+	Using fork() system call
+	Using fork() system call
+	Using fork() system call
+
+
+Now total number of processes are created are : 2^4 = 16
+
+---------------------------------------------------------------------------
+
+Example 3 : Testing if fork() was successful
+
+	#include<stdio.h>
+	#include<unistd.h>
+	#include<sys/types.h>
+
+	int main()
+	{
+		pid_t p;
+		p = fork();
+		
+		if(p == -1)
+		{
+			printf("There is an error while calling fork()");
+		}
+
+		if(p == 0)	
+		{
+			printf("We are in the child process\n");
+		}
+		else
+		{
+			printf("We are in the parent process\n");
+		}
+
+		return 0;
+	}
+
+Output:
+
+	We are in the child process
+	We are in the parent process
+
+------------------------------------------
+
+Explaination :
+	
+	- Here we used pid_t type which will store the return value of fork()
+
+	- The fork is called. p = fork()
+
+	- So integer value returned by the fork is stored in the p.
+
+	- The p is compared with -1, to check if fork() call is successful or not.
+
+	- When child process gets created successfully the id of child process will be returned to paretn process and 0 will be returned to the child process.
+
+	- The ID of child process in parent process will not be the same as the ID of child process itself.
+	
+	- In child process the ID of child process will be 0
+
+----------------------------------------------------------------------------------
