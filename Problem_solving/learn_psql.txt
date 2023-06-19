@@ -1,0 +1,101 @@
+- To list out all the databases in psql
+	SELECT datname FROM pg_database;
+
+   There is one more way to list out all database
+	\l
+
+- To delete database
+	DROP DATABASE <database name>;
+
+- To create database
+	CREATE DATABASE <database name>;
+
+- To select database 
+	\c <database name>;
+
+- How to create a table
+	CREATE TABLE <table name>(
+		column1 datatype,
+  		column2 datatype,
+  		column3 datatype,
+  		.....
+  		columnN datatype,
+  		PRIMARY KEY( one or more columns )
+	);
+
+- To drop table
+	DROP TABLE table name;
+
+- To list out all the tabe 
+	\d
+
+
+
+- Schema is named collection of tables. A schema can also contain views,
+indexes, sequences, data types, operators, and functions.
+Schemas are analogus to directories at the operating system level,
+except schemas cannot be nested.
+
+	- To create a schema
+		CREATE SCHEMA name;
+
+	- for example:
+	
+		testdb=# CREATE SCHEMA myschema;
+		CREATE SCHEMA
+
+	- Now to create table in myschema
+		
+		testdb=# CREATE TABLE myschema.company(
+	         	 column1 datatype,
+  			 column2 datatype,
+  			 column3 datatype,
+   		  	 .....
+  			 columnN datatype,
+ 	 		 PRIMARY KEY( one or more columns )
+		);	
+		
+
+- Insert Query
+
+	INSERT INTO tablename (column1, column2, column3,..., columnN)
+	VALUES(value1,value2,value3,...,valueN)
+
+	
+	- There is no need to specifies the column names if you are adding values
+	for all the columns of the table.
+	
+	INSERT INTO tablename VALUES(value1,value2,value3,...,valueN);
+
+	- For eg.
+		- Here we are inserting single row	
+
+	INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY,JOIN_DATE) VALUES (1, 'Paul', 32, 'California', 20000.00,'2001-07-13');
+	
+		- Here salary column is excluded
+
+	INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,JOIN_DATE) VALUES (2, 'Allen', 25, 'Texas', '2007-12-13');
+		
+		- Here 'DEFAULT' clause is used for JOIN_DATE column
+
+	INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY,JOIN_DATE) VALUES (3, 'Teddy', 23, 'Norway', 20000.00, DEFAULT );
+		
+		- We can add multiple rows.
+
+	INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY,JOIN_DATE) VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00, '2007-12-13' ), (5, 'David', 27, 'Texas', 85000.00, '2007-12-13');
+
+
+
+- SELECT query:
+
+	Used to fetch data from a database table, which returns the data in
+	form of result table.
+	These result tables are called result-sets.
+
+	- Syntax	
+		SELECT col1,col2,col3,...,colN FROM table_name;
+
+	- To get all columns of table
+		SELECT * FROM tabelname;
+
+	-

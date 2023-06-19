@@ -1,0 +1,9 @@
+- Project idea:
+	I want to implement suffix tree and make it scalable.
+And implement algorithms (if any) for faster searches in suffix tree.
+For now I didn't think of any application for implementing this data
+structures.
+
+	If you have any other suggestion other than this project idea
+sir please suggest me.
+

@@ -1,0 +1,12 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+void search_path(int arr[][], int row, int col, int start_x, int start_y, int end_x, int end_y)
+{	
+	
+}
+
+int main()
+{
+	return 0;
+}

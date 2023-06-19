@@ -1,0 +1,55 @@
+psql operators:
+
+An operator is reserved character used primarily in a postgres statements 
+WHERE clause to perform operations, such as comparison and arithmetic operations
+
+Operators are used to specify conditions in a psql statement and to serve
+as conjuctions for multiple conditions in a statement
+
+Operators:
+	- Arithmetic
+	- Comparison
+	- Logical
+	- Bitwise
+
+
+- Arithmetic operators:
+	
+	- Addition (+)
+	- Subtraction (-)
+	- Multiplication (*)
+	- Division (/)
+	- Modulus (%)
+	- Exponention (^)
+	- Sqare root (|/)
+	- Cube root (||/)
+	- Factorial (!)	for eg 5! will give 120
+	- Factorial prefix operator (!!) for eg !! 5 will give 120
+
+
+- Comparison Operators:
+	
+	- To check equlity (=)
+	- To check unequality (!=)
+	- To check equality (<>) If values are not equal then returns true.
+	- Greater than (>)
+	- Smaller than (<)
+	- Greater than or equal to (>=)
+	- Smaller than or equal to (<=)
+	
+
+- Logical operators:
+	
+	- AND used in WHERE clouse
+	- NOT used to reverse the meaning NOT EXISTS, NOT BETWEEN, NOT IN etc.
+	- OR used in WHERE clouse
+
+
+- Bit string Operators:
+
+	- Bitwise and (&)
+	- Bitwise or (|)
+	- Bitwise not (~)
+	- Left shift (<<)
+	- Right shift (>>)
+	- Bitwise exor (#)
